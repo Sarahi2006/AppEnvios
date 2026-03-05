@@ -1,0 +1,31 @@
+﻿@model IEnumerable<AppEnvios.Models.EstadoEnvio>
+
+@{
+    ViewData["Title"] = "Estados de Envío";
+}
+
+<h2>Estados de Envío</h2>
+<a asp-action="Create" class="btn btn-primary mb-3">Nuevo Estado</a>
+
+<table class="table table-striped mt-3">
+    <thead>
+        <tr>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var estado in Model)
+        {
+            <tr>
+                <td>@estado.NombreEstado</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@estado.EstadoId"
+                       class="btn btn-warning btn-sm">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@estado.EstadoId"
+                       class="btn btn-danger btn-sm">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

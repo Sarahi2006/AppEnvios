@@ -1,0 +1,41 @@
+﻿@model IEnumerable<AppEnvios.Models.Destinatario>
+
+@{
+    ViewData["Title"] = "Destinatarios";
+}
+
+<h2>Lista de Destinatarios</h2>
+<a asp-action="Create" class="btn btn-primary mb-3">Nuevo Destinatario</a>
+
+<table class="table table-striped mt-3">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Teléfono</th>
+            <th>Dirección</th>
+            <th>Ciudad</th>
+            <th>País</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var destinatario in Model)
+        {
+            <tr>
+                <td>@destinatario.Nombre</td>
+                <td>@destinatario.Telefono</td>
+                <td>@destinatario.Direccion</td>
+                <td>@destinatario.Ciudad</td>
+                <td>@destinatario.Pais</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@destinatario.DestinatarioId"
+                       class="btn btn-info btn-sm">Ver</a>
+                    <a asp-action="Edit" asp-route-id="@destinatario.DestinatarioId"
+                       class="btn btn-warning btn-sm">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@destinatario.DestinatarioId"
+                       class="btn btn-danger btn-sm">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,20 @@
+﻿@model AppEnvios.Models.Envio
+
+@{
+    ViewData["Title"] = "Eliminar Envío";
+}
+
+<h2>Eliminar Envío</h2>
+<h4>¿Estás seguro que deseas eliminar este envío?</h4>
+
+<div class="alert alert-warning">
+    <strong>Cliente:</strong> @Model.Cliente?.Nombre <br />
+    <strong>Destinatario:</strong> @Model.Destinatario?.Nombre <br />
+    <strong>Costo:</strong> $@Model.Costo
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="EnvioId" />
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

@@ -1,0 +1,101 @@
+﻿@model AppEnvios.Models.Envio
+@{
+    ViewData["Title"] = "Crear Envío";
+    var rol = Context.Session.GetString("Rol");
+}
+
+<h2>Crear Envío</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+@if (!ViewData.ModelState.IsValid && ViewData.ModelState.Values.Any(v => v.Errors.Count > 0))
+{
+    <div class="alert alert-danger">
+        <strong>Errores:</strong>
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+
+    @* ClienteId *@
+    <div class="mb-3">
+        <label asp-for="ClienteId" class="form-label">Cliente</label>
+        @if (rol == "Cliente")
+        {
+            @* Campo oculto para que el valor se envíe aunque el select esté deshabilitado *@
+            <input type="hidden" asp-for="ClienteId" />
+            <select asp-for="ClienteId" asp-items="ViewBag.ClienteId" class="form-control" disabled>
+            </select>
+        }
+        else
+        {
+            <select asp-for="ClienteId" asp-items="ViewBag.ClienteId" class="form-control">
+                <option value="">-- Seleccione un cliente --</option>
+            </select>
+        }
+        <span asp-validation-for="ClienteId" class="text-danger"></span>
+    </div>
+
+    @* DestinatarioId *@
+    <div class="mb-3">
+        <label asp-for="DestinatarioId" class="form-label">Destinatario</label>
+        <select asp-for="DestinatarioId" asp-items="ViewBag.DestinatarioId" class="form-control">
+            <option value="">-- Seleccione un destinatario --</option>
+        </select>
+        <span asp-validation-for="DestinatarioId" class="text-danger"></span>
+    </div>
+
+    @* EstadoId: Admin lo elige, Cliente lo recibe automático *@
+    @if (rol == "Admin")
+    {
+        <div class="mb-3">
+            <label asp-for="EstadoId" class="form-label">Estado</label>
+            <select asp-for="EstadoId" asp-items="ViewBag.EstadoId" class="form-control">
+                <option value="">-- Seleccione un estado --</option>
+            </select>
+            <span asp-validation-for="EstadoId" class="text-danger"></span>
+        </div>
+    }
+    else
+    {
+        @* Campo oculto con valor 0; el controlador lo sobreescribe con "Pendiente" *@
+        <input type="hidden" asp-for="EstadoId" value="0" />
+        <div class="mb-3">
+            <label class="form-label">Estado</label>
+            <input type="text" class="form-control" value="Pendiente (automático)" disabled readonly />
+            <small class="text-muted">El estado se asignará automáticamente</small>
+        </div>
+    }
+
+    @* FechaEntrega *@
+    <div class="mb-3">
+        <label asp-for="FechaEntrega" class="form-label">Fecha Entrega (opcional)</label>
+        <input asp-for="FechaEntrega" type="date" class="form-control" />
+        <span asp-validation-for="FechaEntrega" class="text-danger"></span>
+    </div>
+
+    @* Costo *@
+    <div class="mb-3">
+        <label asp-for="Costo" class="form-label">Costo ($)</label>
+        <input asp-for="Costo" type="number" step="0.01" min="0.01" class="form-control" />
+        <span asp-validation-for="Costo" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

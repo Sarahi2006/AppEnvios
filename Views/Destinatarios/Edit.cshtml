@@ -1,0 +1,39 @@
+﻿@model AppEnvios.Models.Destinatario
+
+@{
+    ViewData["Title"] = "Editar Destinatario";
+}
+
+<h2>Editar Destinatario</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="DestinatarioId" />
+
+    <div class="mb-3">
+        <label>Nombre</label>
+        <input asp-for="Nombre" class="form-control" />
+        <span asp-validation-for="Nombre" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label>Teléfono</label>
+        <input asp-for="Telefono" class="form-control" />
+        <span asp-validation-for="Telefono" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label>Dirección</label>
+        <input asp-for="Direccion" class="form-control" />
+        <span asp-validation-for="Direccion" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label>Ciudad</label>
+        <input asp-for="Ciudad" class="form-control" />
+        <span asp-validation-for="Ciudad" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label>País</label>
+        <input asp-for="Pais" class="form-control" />
+        <span asp-validation-for="Pais" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-warning">Actualizar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

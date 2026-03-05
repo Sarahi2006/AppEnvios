@@ -1,0 +1,31 @@
+﻿@model AppEnvios.Models.Destinatario
+
+@{
+    ViewData["Title"] = "Detalle Destinatario";
+}
+
+<h2>Detalle del Destinatario</h2>
+
+<div class="card mt-3" style="max-width: 600px;">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-4">Nombre</dt>
+            <dd class="col-sm-8">@Model.Nombre</dd>
+
+            <dt class="col-sm-4">Teléfono</dt>
+            <dd class="col-sm-8">@Model.Telefono</dd>
+
+            <dt class="col-sm-4">Dirección</dt>
+            <dd class="col-sm-8">@Model.Direccion</dd>
+
+            <dt class="col-sm-4">Ciudad</dt>
+            <dd class="col-sm-8">@Model.Ciudad</dd>
+
+            <dt class="col-sm-4">País</dt>
+            <dd class="col-sm-8">@Model.Pais</dd>
+        </dl>
+    </div>
+</div>
+
+<a asp-action="Edit" asp-route-id="@Model.DestinatarioId" class="btn btn-warning mt-2">Editar</a>
+<a asp-action="Index" class="btn btn-secondary mt-2">Volver</a>

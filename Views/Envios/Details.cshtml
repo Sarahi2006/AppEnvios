@@ -1,0 +1,36 @@
+﻿@model AppEnvios.Models.Envio
+
+@{
+    ViewData["Title"] = "Detalle Envío";
+}
+
+<h2>Detalle del Envío</h2>
+
+<div class="card mt-3" style="max-width: 600px;">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-4">Cliente</dt>
+            <dd class="col-sm-8">@Model.Cliente?.Nombre</dd>
+
+            <dt class="col-sm-4">Destinatario</dt>
+            <dd class="col-sm-8">@Model.Destinatario?.Nombre</dd>
+
+            <dt class="col-sm-4">Estado</dt>
+            <dd class="col-sm-8">@Model.EstadoEnvio?.NombreEstado</dd>
+
+            <dt class="col-sm-4">Fecha Envío</dt>
+            <dd class="col-sm-8">@Model.FechaEnvio.ToString("dd/MM/yyyy")</dd>
+
+            <dt class="col-sm-4">Fecha Entrega</dt>
+            <dd class="col-sm-8">
+                @(Model.FechaEntrega.HasValue? Model.FechaEntrega.Value.ToString("dd/MM/yyyy") : "Pendiente")
+            </dd>
+
+            <dt class="col-sm-4">Costo</dt>
+            <dd class="col-sm-8">$@Model.Costo</dd>
+        </dl>
+    </div>
+</div>
+
+<a asp-action="Edit" asp-route-id="@Model.EnvioId" class="btn btn-warning mt-2">Editar</a>
+<a asp-action="Index" class="btn btn-secondary mt-2">Volver</a>

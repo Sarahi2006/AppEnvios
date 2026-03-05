@@ -1,0 +1,145 @@
+﻿@model IEnumerable<AppEnvios.Models.Envio>
+
+@{
+    ViewData["Title"] = "Envíos";
+    var rol = Context.Session.GetString("Rol");
+}
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        @ViewBag.Error
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Mis Envíos</h2>
+    <a asp-action="Create" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> Nuevo Envío
+    </a>
+</div>
+
+<!-- Agregar filtros por estado -->
+<div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title">Filtrar por estado</h5>
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-outline-secondary filter-btn" data-filter="todos">Todos</button>
+            <button type="button" class="btn btn-outline-warning filter-btn" data-filter="Pendiente">Pendientes</button>
+            <button type="button" class="btn btn-outline-primary filter-btn" data-filter="En transito">En Tránsito</button>
+            <button type="button" class="btn btn-outline-success filter-btn" data-filter="Entregado">Entregados</button>
+        </div>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover" id="enviosTable">
+        <thead class="table-dark">
+            <tr>
+                <th>Cliente</th>
+                <th>Destinatario</th>
+                <th>Estado</th>
+                <th>Fecha Envío</th>
+                <th>Fecha Entrega</th>
+                <th>Costo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var envio in Model)
+            {
+                <tr data-estado="@envio.EstadoEnvio?.NombreEstado">
+                    <td>@envio.Cliente?.Nombre</td>
+                    <td>@envio.Destinatario?.Nombre</td>
+                    <td>
+                        @{
+                            string badgeClass = envio.EstadoEnvio?.NombreEstado switch
+                            {
+                                            "Pendiente" => "bg-warning",
+                                            "En transito" => "bg-primary",
+                                            "Entregado" => "bg-success",
+                                _ => "bg-secondary"
+                            };
+                        }
+                        <span class="badge @badgeClass">@envio.EstadoEnvio?.NombreEstado</span>
+                    </td>
+                    <td>@envio.FechaEnvio.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>
+                        @if (envio.FechaEntrega.HasValue)
+                        {
+                            @envio.FechaEntrega.Value.ToString("dd/MM/yyyy")
+                        }
+                        else
+                        {
+                            <span class="text-muted">Pendiente</span>
+                        }
+                    </td>
+                    <td><strong>$@envio.Costo.ToString("N2")</strong></td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@envio.EnvioId"
+                           class="btn btn-info btn-sm" title="Ver detalles">
+                            <i class="bi bi-eye"></i> Ver
+                        </a>
+
+                        @if (envio.EstadoEnvio?.NombreEstado == "Pendiente")
+                        {
+                            <a asp-action="Edit" asp-route-id="@envio.EnvioId"
+                               class="btn btn-warning btn-sm" title="Editar">
+                                <i class="bi bi-pencil"></i> Editar
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@envio.EnvioId"
+                               class="btn btn-danger btn-sm" title="Eliminar">
+                                <i class="bi bi-trash"></i> Eliminar
+                            </a>
+                        }
+                        else
+                        {
+                            <button class="btn btn-secondary btn-sm" disabled title="No se puede editar en este estado">
+                                <i class="bi bi-pencil"></i> Editar
+                            </button>
+                            <button class="btn btn-secondary btn-sm" disabled title="No se puede eliminar en este estado">
+                                <i class="bi bi-trash"></i> Eliminar
+                            </button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        No hay envíos registrados. <a asp-action="Create">Crear el primer envío</a>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        // Filtrado por estado
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const filter = this.dataset.filter;
+
+                // Actualizar botones activos
+                document.querySelectorAll('.filter-btn').forEach(b => {
+                    b.classList.remove('active');
+                });
+                this.classList.add('active');
+
+                // Filtrar filas
+                const rows = document.querySelectorAll('#enviosTable tbody tr');
+                rows.forEach(row => {
+                    if (filter === 'todos') {
+                        row.style.display = '';
+                    } else {
+                        const estado = row.dataset.estado;
+                        row.style.display = estado === filter ? '' : 'none';
+                    }
+                });
+            });
+        });
+    </script>
+}

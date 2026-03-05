@@ -1,0 +1,67 @@
+﻿@model IEnumerable<AppEnvios.Models.AuditoriaEnvio>
+
+@{
+    ViewData["Title"] = "Auditoría de Envíos";
+}
+
+<h2>Historial de Auditoría</h2>
+
+<table class="table table-striped mt-3 table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Tabla</th>
+            <th>ID Registro</th>
+            <th>Acción</th>
+            <th style="width: 25%;">Valor Anterior</th>
+            <th style="width: 25%;">Valor Nuevo</th>
+            <th>Usuario</th>
+            <th>Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.TablaAfectada</td>
+                <td>@item.RegistroId</td>
+                <td>
+                    @if (item.Accion == "INSERT")
+                    {
+                        <span class="badge bg-success">INSERT</span>
+                    }
+                    else if (item.Accion == "UPDATE")
+                    {
+                        <span class="badge bg-warning text-dark">UPDATE</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger">DELETE</span>
+                    }
+                </td>
+
+                <!-- Valor Anterior -->
+                <td>
+                    @if (!string.IsNullOrEmpty(item.ValorAnterior))
+                    {
+                        <pre style="white-space: pre-wrap; word-break: break-word; font-size: 12px;">
+        @item.ValorAnterior
+                                </pre>
+                    }
+                </td>
+
+                <!-- Valor Nuevo -->
+                <td>
+                    @if (!string.IsNullOrEmpty(item.ValorNuevo))
+                    {
+                        <pre style="white-space: pre-wrap; word-break: break-word; font-size: 12px;">
+        @item.ValorNuevo
+                                </pre>
+                    }
+                </td>
+
+                <td>@item.UsuarioAccion</td>
+                <td>@item.FechaAccion.ToString("dd/MM/yyyy HH:mm")</td>
+            </tr>
+        }
+    </tbody>
+</table>

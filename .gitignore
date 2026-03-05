@@ -1,0 +1,29 @@
+## Archivos de Visual Studio
+.vs/
+bin/
+obj/
+packages/
+*.user
+*.suo
+*.userprefs
+
+## Archivos de compilación
+Debug/
+Release/
+x64/
+x86/
+
+## Archivos de configuración locales
+appsettings.Development.json
+appsettings.Production.json
+
+## Archivos específicos de ASP.NET
+*.db
+*.mdf
+*.ldf
+
+## Node modules (si usas npm)
+node_modules/
+
+## Archivos de entorno
+.env

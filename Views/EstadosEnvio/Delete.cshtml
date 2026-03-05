@@ -1,0 +1,18 @@
+﻿@model AppEnvios.Models.EstadoEnvio
+
+@{
+    ViewData["Title"] = "Eliminar Estado";
+}
+
+<h2>Eliminar Estado de Envío</h2>
+<h4>¿Estás seguro que deseas eliminar este estado?</h4>
+
+<div class="alert alert-warning">
+    <strong>@Model.NombreEstado</strong>
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="EstadoId" />
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

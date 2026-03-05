@@ -1,0 +1,86 @@
+@model AppEnvios.Models.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+    var rol = Context.Session.GetString("Rol");
+}
+
+<h2 class="mb-4">Dashboard</h2>
+
+@if (rol == "Admin")
+{
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card text-white bg-primary shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Total Envíos</h5>
+                    <p class="card-text fs-2 fw-bold">@Model.TotalEnvios</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-success shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Total Clientes</h5>
+                    <p class="card-text fs-2 fw-bold">@Model.TotalClientes</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-info shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Total Usuarios</h5>
+                    <p class="card-text fs-2 fw-bold">@Model.TotalUsuarios</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-dark shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Ingresos Totales</h5>
+                    <p class="card-text fs-2 fw-bold">$@Model.IngresoTotal</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card border-warning shadow">
+            <div class="card-body">
+                <h5 class="card-title text-warning">Pendientes</h5>
+                <p class="card-text fs-2 fw-bold">@Model.EnviosPendientes</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-primary shadow">
+            <div class="card-body">
+                <h5 class="card-title text-primary">En Tránsito</h5>
+                <p class="card-text fs-2 fw-bold">@Model.EnviosEnTransito</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-success shadow">
+            <div class="card-body">
+                <h5 class="card-title text-success">Entregados</h5>
+                <p class="card-text fs-2 fw-bold">@Model.EnviosEntregados</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (rol == "Cliente")
+{
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card text-white bg-dark shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Total Gastado</h5>
+                    <p class="card-text fs-2 fw-bold">$@Model.IngresoTotal</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}

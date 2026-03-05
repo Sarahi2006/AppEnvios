@@ -1,0 +1,18 @@
+﻿@model AppEnvios.Models.Destinatario
+
+@{
+    ViewData["Title"] = "Eliminar Destinatario";
+}
+
+<h2>Eliminar Destinatario</h2>
+<h4>¿Estás seguro que deseas eliminar este destinatario?</h4>
+
+<div class="alert alert-warning">
+    <strong>@Model.Nombre</strong> — @Model.Ciudad, @Model.Pais
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="DestinatarioId" />
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

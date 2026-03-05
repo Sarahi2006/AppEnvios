@@ -1,0 +1,67 @@
+﻿@model AppEnvios.Models.Envio
+@{
+    ViewData["Title"] = "Editar Envío";
+    var rol = Context.Session.GetString("Rol");
+}
+
+<h2>Editar Envío</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="EnvioId" />
+
+            <div class="mb-3">
+                <label asp-for="ClienteId" class="form-label">Cliente</label>
+                <select asp-for="ClienteId" asp-items="ViewBag.ClienteId" class="form-control">
+                    <option value="">-- Seleccione un cliente --</option>
+                </select>
+                <span asp-validation-for="ClienteId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="DestinatarioId" class="form-label">Destinatario</label>
+                <select asp-for="DestinatarioId" asp-items="ViewBag.DestinatarioId" class="form-control">
+                    <option value="">-- Seleccione un destinatario --</option>
+                </select>
+                <span asp-validation-for="DestinatarioId" class="text-danger"></span>
+            </div>
+
+            <!-- Mostrar estado actual pero no permitir edición -->
+            <div class="mb-3">
+                <label class="form-label">Estado Actual</label>
+                <input type="text" class="form-control" value="@Model.EstadoEnvio?.NombreEstado" disabled readonly />
+                @if (rol == "Admin")
+                {
+                    <small class="text-muted">Para cambiar el estado, use el panel de administración</small>
+                }
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Fecha de Envío</label>
+                <input type="text" class="form-control" value="@Model.FechaEnvio.ToString("dd/MM/yyyy HH:mm")" disabled readonly />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="FechaEntrega" class="form-label">Fecha Entrega</label>
+                <input asp-for="FechaEntrega" type="date" class="form-control" />
+                <span asp-validation-for="FechaEntrega" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Costo" class="form-label">Costo ($)</label>
+                <input asp-for="Costo" class="form-control" />
+                <span asp-validation-for="Costo" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

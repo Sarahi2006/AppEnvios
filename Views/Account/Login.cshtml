@@ -1,0 +1,101 @@
+﻿@{
+    ViewData["Title"] = "Iniciar Sesión - Small Box";
+    Layout = null; // Mantenemos Layout nulo para que sea una página limpia
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #0f172a; /* El mismo fondo oscuro de tu Layout */
+            color: #f8fafc;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .card {
+            background-color: #1e293b; /* Fondo del Sidebar */
+            border: 1px solid #334155;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .form-control {
+            background-color: #0f172a;
+            color: #f8fafc;
+            border: 1px solid #334155;
+        }
+
+            .form-control:focus {
+                background-color: #0f172a;
+                color: #white;
+                border-color: #3b82f6;
+                box-shadow: 0 0 0 0.2rem rgba(59,130,246,.25);
+            }
+
+        .btn-primary {
+            background-color: #3b82f6;
+            border: none;
+            font-weight: bold;
+            padding: 10px;
+        }
+
+            .btn-primary:hover {
+                background-color: #2563eb;
+            }
+
+        .brand-logo {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body p-5">
+                        <div class="text-center mb-4">
+                            <div class="brand-logo">📦 Small Box</div>
+                            <p class="text-muted">Gestión de Envíos</p>
+                        </div>
+
+                        @if (ViewBag.Error != null)
+                        {
+                            <div class="alert alert-danger py-2 small" style="background-color: #7f1d1d; color: #fecaca; border: none;">
+                                @ViewBag.Error
+                            </div>
+                        }
+
+                        <form method="post">
+                            <div class="mb-3">
+                                <label class="form-label small" style="color: #cbd5e1;">Correo electrónico</label>
+                                <input type="email" name="email" class="form-control" placeholder="admin@smallbox.com" required />
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label small" style="color: #cbd5e1;">Contraseña</label>
+                                <input type="password" name="password" class="form-control" placeholder="••••••••" required />
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Entrar al Sistema</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <p class="small text-muted">© @DateTime.Now.Year - Small Box Logistics</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

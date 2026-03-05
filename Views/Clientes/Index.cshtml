@@ -1,0 +1,41 @@
+﻿@model IEnumerable<AppEnvios.Models.Cliente>
+
+@{
+    ViewData["Title"] = "Clientes";
+}
+
+<h2>Lista de Clientes</h2>
+<a asp-action="Create" class="btn btn-primary mb-3">Nuevo Cliente</a>
+
+<table class="table table-striped mt-3">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Teléfono</th>
+            <th>Email</th>
+            <th>Dirección</th>
+            <th>Fecha Registro</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cliente in Model)
+        {
+            <tr>
+                <td>@cliente.Nombre</td>
+                <td>@cliente.Telefono</td>
+                <td>@cliente.Email</td>
+                <td>@cliente.Direccion</td>
+                <td>@cliente.FechaRegistro.ToShortDateString()</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@cliente.ClienteId"
+                       class="btn btn-info btn-sm">Ver</a>
+                    <a asp-action="Edit" asp-route-id="@cliente.ClienteId"
+                       class="btn btn-warning btn-sm">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@cliente.ClienteId"
+                       class="btn btn-danger btn-sm">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

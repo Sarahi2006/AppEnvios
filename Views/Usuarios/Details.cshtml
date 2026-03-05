@@ -1,0 +1,13 @@
+﻿@model AppEnvios.Models.Usuario
+@{
+    ViewData["Title"] = "Detalle Usuario";
+}
+<h2>Detalle de Usuario</h2>
+<div class="card p-3 mb-3">
+    <p><strong>Nombre:</strong> @Model.Nombre</p>
+    <p><strong>Email:</strong> @Model.Email</p>
+    <p><strong>Rol:</strong> @Model.Rol</p>
+    <p><strong>Cliente Vinculado:</strong> @(Model.Cliente?.Nombre ?? "—")</p>
+</div>
+<a asp-action="Edit" asp-route-id="@Model.UsuarioId" class="btn btn-warning">Editar</a>
+<a asp-action="Index" class="btn btn-secondary">Volver</a>

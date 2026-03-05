@@ -1,0 +1,16 @@
+﻿@model AppEnvios.Models.Usuario
+@{
+    ViewData["Title"] = "Eliminar Usuario";
+}
+<h2>¿Eliminar este usuario?</h2>
+<div class="card p-3 mb-3">
+    <p><strong>Nombre:</strong> @Model.Nombre</p>
+    <p><strong>Email:</strong> @Model.Email</p>
+    <p><strong>Rol:</strong> @Model.Rol</p>
+    <p><strong>Cliente Vinculado:</strong> @(Model.Cliente?.Nombre ?? "—")</p>
+</div>
+<form method="post">
+    <input asp-for="UsuarioId" type="hidden" />
+    <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

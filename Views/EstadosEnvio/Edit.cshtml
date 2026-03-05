@@ -1,0 +1,18 @@
+﻿@model AppEnvios.Models.EstadoEnvio
+
+@{
+    ViewData["Title"] = "Editar Estado";
+}
+
+<h2>Editar Estado de Envío</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="EstadoId" />
+    <div class="mb-3">
+        <label>Nombre del Estado</label>
+        <input asp-for="NombreEstado" class="form-control" />
+        <span asp-validation-for="NombreEstado" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-warning">Actualizar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
